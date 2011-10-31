@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<question-set id="Question Set 1" 
+    difficulty="medium" 
+    subject="general knowledge" 
+    description="General questions, nothing too tough" 
+    questions="16" >
+
+	<question id="1" correct="4">
+		What is the capital city of England?
+		<answer id="1">Dublin</answer>
+		<answer id="2">Tokyo</answer>
+		<answer id="3">New York</answer>
+		<answer id="4">London</answer>
+	</question>
+
+	<question id="2" correct="1">
+		In the United States, how much is a dime worth?
+		<answer id="1">10 cents</answer>
+		<answer id="2">5 cents</answer>
+		<answer id="3">25 cents</answer>
+		<answer id="4">50 cents</answer>
+	</question>
+
+	<question id="3" correct="4">
+		In which country was George Washington the first president?
+		<answer id="1">Philippines</answer>
+		<answer id="2">Canada</answer>
+		<answer id="3">Germany</answer>
+		<answer id="4">United States of America</answer>
+	</question>
+
+	<question id="4" correct="1">
+		How many inches are in one foot?
+		<answer id="1">12</answer>
+		<answer id="2">6</answer>
+		<answer id="3">13</answer>
+		<answer id="4">10</answer>
+	</question>
+
+	<question id="5" correct="2">
+		Michael Jordan professionally played which of these sports?
+		<answer id="1">Cricket</answer>
+		<answer id="2">Basketball</answer>
+		<answer id="3">Water Polo</answer>
+		<answer id="4">Table Tennis</answer>
+	</question>
+
+	<question id="6" correct="3">
+		What was the maiden name of Bill Clinton's wife?
+		<answer id="1">Frances Folsom</answer>
+		<answer id="2">Barbara Pierce</answer>
+		<answer id="3">Hillary Rodham</answer>
+		<answer id="4">Monica Lewinsky</answer>
+	</question>
+
+	<question id="7" correct="1">
+		Dr. Seuss wrote all of these books except for which?
+		<answer id="1">Tootle</answer>
+		<answer id="2">The Cat in the Hat</answer>
+		<answer id="3">Oh, the Places You'll Go!</answer>
+		<answer id="4">Green Eggs and Ham</answer>
+	</question>
+
+	<question id="8" correct="1">
+		In the Garfield comic strip, what is the name of Garfield's rubber
+		chicken?
+		<answer id="1">Stretch</answer>
+		<answer id="2">Ed</answer>
+		<answer id="3">Pooky</answer>
+		<answer id="4">Herbie</answer>
+	</question>
+
+	<question id="9" correct="3">
+		The act of having several wives at one time is called what?
+		<answer id="1">Endogamy</answer>
+		<answer id="2">Monogamy</answer>
+		<answer id="3">Polygamy</answer>
+		<answer id="4">Apogamy</answer>
+	</question>
+
+	<question id="10" correct="4">
+		What was the first U.S. state to enter the Union?
+		<answer id="1">Georgia</answer>
+		<answer id="2">New Jersey</answer>
+		<answer id="3">Pennsylvania</answer>
+		<answer id="4">Delaware</answer>
+	</question>
+
+	<question id="11" correct="2">
+		What is the name of the angel in 'It's a Wonderful Life'?
+		<answer id="1">Bernard</answer>
+		<answer id="2">Clarence</answer>
+		<answer id="3">Hilda</answer>
+		<answer id="4">Yvonne</answer>
+	</question>
+
+	<question id="12" correct="3">
+		If you were born on July 1st, what would your astrological sign be?
+		<answer id="1">Leo</answer>
+		<answer id="2">Taurus</answer>
+		<answer id="3">Cancer</answer>
+		<answer id="4">Gemini</answer>
+	</question>
+
+	<question id="13" correct="3">
+		In the song 'Blue' by Eiffel 65, what nonsensical phrase does the
+		singer repeatedly sing?
+		<answer id="1">Li da di li di da</answer>
+		<answer id="2">Da ba dye da ba dee</answer>
+		<answer id="3">Da ba dee da ba dye</answer>
+		<answer id="4">Li di da li da di dye</answer>
+	</question>
+
+	<question id="14" correct="2">
+		Whom did Bobby Fischer defeat in 1972 to become Chess World Champion?
+		<answer id="1">Mikhail Botvinnik</answer>
+		<answer id="2">Boris Spassky</answer>
+		<answer id="3">Tigran Petrosian</answer>
+		<answer id="4">Mikhail Tal</answer>
+	</question>
+
+	<question id="15" correct="4">
+		Which planet once had a 'Great Dark Spot' before it disappeared in
+		1995?
+		<answer id="1">Mars</answer>
+		<answer id="2">Jupiter</answer>
+		<answer id="3">Saturn</answer>
+		<answer id="4">Neptune</answer>
+	</question>
+
+	<question id="16" correct="1">
+		The mathematical term 'e' stands for what id, to two decimal
+		places?
+		<answer id="1">2.71</answer>
+		<answer id="2">2.17</answer>
+		<answer id="3">1.73</answer>
+		<answer id="4">1.37</answer>
+	</question>
+
+</question-set>
