@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/question_mainLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/darker_gray"
     android:orientation="vertical" >
 
-    
+    <TextView
+        android:id="@+id/question_questionNumber"
+        android:layout_weight="10"
+        style="@style/CurrentQuestionNumberText" />
+
+    <TextView
+        android:id="@+id/question_currentQuestion"
+        android:layout_weight="30"
+        style="@style/CurrentQuestionText" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/question_buttonLayout"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@android:color/darker_gray"
+        android:layout_weight="60"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/question_answer1"
+            android:text="Answer 1"
+            style="@style/ButtonText"
+            android:layout_weight="25" />
+
+        <Button
+            android:id="@+id/question_answer2"
+            android:text="Answer 2"
+            style="@style/ButtonText"
+            android:layout_weight="25" />
+
+        <Button
+            android:id="@+id/question_answer3"
+            android:text="Answer 3"
+            style="@style/ButtonText"
+            android:layout_weight="25" />
+
+        <Button
+            android:id="@+id/question_answer4"
+            android:text="Answer 4"
+            style="@style/ButtonText"
+            android:layout_weight="25" />
+    </LinearLayout>
 
 </LinearLayout>

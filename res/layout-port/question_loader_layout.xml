@@ -5,29 +5,25 @@
     android:orientation="vertical" >
 
     <Spinner
-        android:id="@+id/questionSetSpinner"
+        android:id="@+id/loader_questionSetSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TableLayout
-        android:id="@+id/questionSetInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
 		<TableRow
-            android:id="@+id/questionsRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
             <TextView
-                android:id="@+id/questionsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:text="No. of Questions:" />
 
             <TextView
-                android:id="@+id/questionsValue"
+                android:id="@+id/loader_questionsText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="85"
@@ -35,19 +31,16 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/difficultyRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
             <TextView
-                android:id="@+id/difficultyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:text="Difficulty:" />
 
             <TextView
-                android:id="@+id/difficultyValue"
+                android:id="@+id/loader_difficultyText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="85"
@@ -55,19 +48,16 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/subjectRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
             <TextView
-                android:id="@+id/subjectText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:text="Subject:" />
 
             <TextView
-                android:id="@+id/subjectValue"
+                android:id="@+id/loader_subjectText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="85"
@@ -75,19 +65,15 @@
         </TableRow>
 
         <TableRow
-            android:id="@+id/descriptionRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
             <TextView
-                android:id="@+id/descriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="15"
                 android:text="Description:" />
-
             <TextView
-                android:id="@+id/descriptionValue"
+                android:id="@+id/loader_descriptionText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="85"
@@ -97,20 +83,18 @@
     </TableLayout>
 
     <LinearLayout
-        android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip" >
 
         <Button
-            android:id="@+id/confirmButton"
+            android:id="@+id/loader_confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="Load" />
-
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/loader_cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"

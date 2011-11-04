@@ -1,122 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/mainLayout"
+	android:id="@+id/question_mainLayout"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent" 
 	android:background="@android:color/darker_gray" >
 	
-	<TextView android:id="@+id/questionNumber"
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="#FFDDDDDD"
-		android:text="@string/question_number"
-		android:typeface="sans"
-		android:gravity="center" />
+	<TextView
+        android:id="@+id/question_questionNumber"
+        style="@style/CurrentQuestionNumberText" />
 
 	<RelativeLayout
-		android:id="@+id/questionLayout"
+		android:id="@+id/question_questionLayout"
 		android:layout_height="fill_parent"
-		android:layout_width="fill_parent" >
+		android:layout_width="fill_parent"
+		android:layout_weight="90"
+		android:background="@android:color/darker_gray" >
 		
-		<TextView android:id="@+id/currentQuestion"
-			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:textColor="#FFFFFFFF"
-			android:layout_alignParentTop="true"
-			android:layout_centerHorizontal="true"
-			android:gravity="center"
-			android:text="@string/current_question"
-			android:lines="6" />
+		<TextView
+        	android:id="@+id/question_currentQuestion"
+        	style="@style/CurrentQuestionText" />
 			
-		<LinearLayout android:id="@+id/buttonsLayout"
+		<LinearLayout android:id="@+id/question_buttonsLayout"
 			android:layout_height="fill_parent"
 			android:layout_width="fill_parent"
 			android:layout_centerHorizontal="true"
-			android:layout_below="@+id/currentQuestion" >
+			android:layout_below="@+id/question_currentQuestion"
+			android:background="@android:color/darker_gray" >
 			
-			<LinearLayout android:id="@+id/leftButtonsLayout"
+			<LinearLayout android:id="@+id/question_leftButtonsLayout"
 				android:layout_height="fill_parent"
 				android:layout_width="wrap_content"
 				android:orientation="vertical"
-				android:layout_weight="50" >
+				android:layout_weight="50"
+				android:background="@android:color/darker_gray" >
 				
-				<Button android:id="@+id/answer1"
-					android:layout_height="wrap_content"
-					android:layout_width="fill_parent"
+				<Button android:id="@+id/question_answer1"
 					android:layout_weight="50"
+					android:text="Answer 1"
+            		style="@style/ButtonText" />
 					
-					android:focusable="true"
-					android:clickable="true"
-					android:enabled="true"
-					android:textColor="#FFFFFFFF"
-					android:shadowColor="#FF111111"
-					android:shadowDx="0"
-					android:shadowDy="-1"
-					android:shadowRadius="0.2"
-					android:background="@drawable/answer_button_states"
-					
-					android:text="Button" />
-					
-				<Button android:id="@+id/answer3"
-					android:layout_height="wrap_content"
-					android:layout_width="fill_parent"
+				<Button android:id="@+id/question_answer3"
 					android:layout_weight="50"
-					
-					android:focusable="true"
-					android:clickable="true"
-					android:enabled="true"
-					android:textColor="#FFFFFFFF"
-					android:shadowColor="#FF111111"
-					android:shadowDx="0"
-					android:shadowDy="-1"
-					android:shadowRadius="0.2"
-					android:background="@drawable/answer_button_states"
-					
-					android:text="Button" />
+					android:text="Answer 3"
+            		style="@style/ButtonText" />
 			</LinearLayout>
 			
-			<LinearLayout android:id="@+id/rightButtonsLayout"
+			<LinearLayout android:id="@+id/question_rightButtonsLayout"
 				android:layout_height="fill_parent"
 				android:layout_width="wrap_content"
 				android:orientation="vertical"
-				android:layout_weight="50" >
+				android:layout_weight="50"
+				android:background="@android:color/darker_gray" >
 				
-				<Button android:id="@+id/answer2"
-					android:layout_height="wrap_content"
-					android:layout_width="fill_parent"
+				<Button android:id="@+id/question_answer2"
 					android:layout_weight="50"
+					android:text="Answer 2"
+            		style="@style/ButtonText" />
 					
-					android:focusable="true"
-					android:clickable="true"
-					android:enabled="true"
-					android:textColor="#FFFFFFFF"
-					android:shadowColor="#FF111111"
-					android:shadowDx="0"
-					android:shadowDy="-1"
-					android:shadowRadius="0.2"
-					android:background="@drawable/answer_button_states"
-
-					android:text="Button" />
-					
-				<Button android:id="@+id/answer4" 
-					android:layout_height="wrap_content"
-					android:layout_width="fill_parent"
+				<Button android:id="@+id/question_answer4" 
 					android:layout_weight="50"
-
-					android:focusable="true"
-					android:clickable="true"
-					android:enabled="true"
-					android:textColor="#FFFFFFFF"
-					android:shadowColor="#FF111111"
-					android:shadowDx="0"
-					android:shadowDy="-1"
-					android:shadowRadius="0.2"
-					android:background="@drawable/answer_button_states"
-
-					android:text="Button" />
+					android:text="Answer 4"
+            		style="@style/ButtonText" />
 					
 			</LinearLayout>
 			

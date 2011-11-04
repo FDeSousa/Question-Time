@@ -51,7 +51,7 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 	public Question next() {
 		Question toReturn;
 		//	Loop until we find a non-null or we pass the SparseArray's size
-		while (size() > ++next) {
+		while (size() > next++) {
 			//	Return only if not null
 			if ((toReturn = get(next)) != null)
 				return toReturn;
@@ -93,6 +93,55 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 		return description;
 	}
 
+	/**	Position Question Name is in array returned by getQuestionsInformation(parser)			*/
+	public static final int QUESTION_NAME = 0;
+	/**	Position Question Difficulty is in array returned by getQuestionsInformation(parser)	*/
+	public static final int QUESTION_DIFFICULTY = 1;
+	/**	Position Question Subject is in array returned by getQuestionsInformation(parser)		*/
+	public static final int QUESTION_SUBJECT = 2;
+	/**	Position Question Description is in array returned by getQuestionsInformation(parser)	*/
+	public static final int QUESTION_DESCRIPTION = 3;
+	/**	Position Question Numbers is in array returned by getQuestionsInformation(parser)		*/
+	public static final int QUESTION_NUMBERS = 4;
+	
+	/**
+	 * Convenience method for getting just the basic information on a Question Set
+	 * @param parser
+	 * @return
+	 */
+	public static final String[] getQuestionsInformation(XmlResourceParser parser) {
+		String[] information = { "name", "difficulty", "subject", "description", "number" };
+		boolean run = true;
+		int numberOfQuestions = -1;
+
+		int eventType;
+		try {
+			eventType = parser.getEventType();
+			while (run) {
+				if (eventType == XmlPullParser.START_TAG) {
+					if (parser.getName().equals("question-set")) {
+						information[QUESTION_NAME] = parser.getIdAttribute();
+						information[QUESTION_DIFFICULTY] = parser.getAttributeValue(null, "difficulty");
+						information[QUESTION_SUBJECT] = parser.getAttributeValue(null, "subject");
+						information[QUESTION_DESCRIPTION] = parser.getAttributeValue(null, "description");
+						//	If there is no numberOfQuestions attribute, default to -1 so we can then...
+						numberOfQuestions = parser.getAttributeIntValue(null, "questions", -1);
+						//	...correctly initialise questions with the information gathered
+						if (numberOfQuestions > -1) {
+							information[QUESTION_NUMBERS] = Integer.toString(numberOfQuestions);
+						} else {
+							information[QUESTION_NUMBERS] = "Unknown";
+						}
+					}
+				}
+			}
+		} catch (XmlPullParserException e) {
+			Log.e(QuestionTime.TAG, e.getMessage());
+		}
+
+		return information;
+	}
+
 	//	Used for identifying the current tag we're reading in an XML file
 	/**	Used to denote we're reading an undefined tag 	*/
 	private static final int DEFAULT_TAG = 0;
@@ -102,9 +151,10 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 	private static final int QUESTION_TAG = 2;
 	/**	Used to denote we're reading an Answer tag		*/
 	private static final int ANSWER_TAG = 3;
+
 	/**
 	 * Static method for instantiating an instance of QuestionsDataStruct with resources
-	 * read in from an XML file (currently only supporting included application resources)
+	 * read in from an XML file (currently only supports pre-compiled XML in res/xml)
 	 * @param parser
 	 * @return
 	 */
@@ -134,22 +184,16 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 			int eventType = parser.getEventType();
 			//	Keep looping until the end of the document
 			while (run) {
-				//	Check the conditions for running before switch .. case begins
-				if (eventType == XmlPullParser.END_DOCUMENT) {
-					run = false;
-				} else {
-					eventType = parser.next();					
-				}
 				/* Switch depending on what event type we're currently encountering */
 				switch (eventType) {
 				//	Starting with a new tag
 				case XmlPullParser.START_TAG:
 					String tagName = parser.getName();
-					/*
-					 * If encountering a Question Set tag beginning, get the information
-					 * about it, set currentTag to QUESTION_SET_TAG
-					 */
 					if (tagName.equals("question-set")) {
+						/*
+						 * If encountering a Question Set tag beginning, get the information
+						 * about it, set currentTag to QUESTION_SET_TAG
+						 */
 						currentTag = QUESTION_SET_TAG;
 						name = parser.getIdAttribute();
 						difficulty = parser.getAttributeValue(null, "difficulty");
@@ -163,70 +207,71 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 						} else {
 							questions = new QuestionsDataStruct(name, difficulty, subject, description);
 						}
-					/*
-					 * If encountering a Question tag beginning, get the question number,
-					 * set currentTag to QUESTION_TAG, set the correct answer number
-					 */
 					} else if (tagName.equals("question") && currentTag == QUESTION_SET_TAG) {
+						/*
+						 * If encountering a Question tag beginning, get the question number,
+						 * set currentTag to QUESTION_TAG, set the correct answer number
+						 */
 						currentTag = QUESTION_TAG;
 						questionNumber = parser.getIdAttributeResourceValue(++questionNumber);
 						correctAnswerNumber = parser.getAttributeIntValue(null, "correct", 0);
 						//	Reset currentAnswerNumber for safety
 						currentAnswerNumber = 0;
-					/*
-					 * If encountering an Answer tag beginning, get the answer number
-					 * (can default to pre-incrementing if it does not exist), and set
-					 * currentTag to ANSWER_TAG.
-					 * This is all only if we're currently residing inside a Question tag
-					 */
+						answers = new String[4];
 					} else if (tagName.equals("answer") && currentTag == QUESTION_TAG) {
+						/*
+						 * If encountering an Answer tag beginning, get the answer id number,
+						 * using the current answer number if necessary, using a safe +1 default
+						 * This is all only if we're currently residing inside a Question tag
+						 */
 						currentTag = ANSWER_TAG;
-						currentAnswerNumber = parser.getAttributeIntValue(null, "number", ++currentAnswerNumber);
-					/*
-					 * Other, unidentified tags will be ignored for now, so set the DEFAULT_TAG
-					 */
+						currentAnswerNumber = parser.getIdAttributeResourceValue(currentAnswerNumber + 1);
 					} else {
+						/*
+						 * Other, unidentified tags will be ignored for now, so set the DEFAULT_TAG
+						 */
 						currentTag = DEFAULT_TAG;
 					} break;
-				//	Ending the current tag
+					//	Ending the current tag
 				case XmlPullParser.END_TAG:
-					/*
-					 * If we're inside a finishing Question Set tag, set currentTag back to Default,
-					 * and set run to false, signalling we've finished the Question Set (for safety)
-					 */
 					if (currentTag == QUESTION_SET_TAG) {
+						/*
+						 * If we're inside a finishing Question Set tag, set currentTag back to Default,
+						 * and set run to false, signalling we've finished the Question Set (for safety)
+						 */
 						currentTag = DEFAULT_TAG;
 						run = false;
-					/*
-					 * If we're inside a finishing Question tag, append it with the details
-					 * to the questions SparseArray, set currentTag to signal a Question Set
-					 */
 					} else if (currentTag == QUESTION_TAG) {
+						/*
+						 * If we're inside a finishing Question tag, append it with the details
+						 * to the questions SparseArray, set currentTag to signal a Question Set
+						 */
 						questions.append(questionNumber, new Question(questionNumber, questionText, answers, correctAnswerNumber));
 						currentTag = QUESTION_SET_TAG;
-					/*
-					 * If we're inside a finishing Answer tag, just set currentTag to signal a Question
-					 */
 					} else if (currentTag == ANSWER_TAG) {
+						/*
+						 * If we're inside a finishing Answer tag, just set currentTag to signal a Question
+						 */
 						currentTag = QUESTION_TAG;
 					} break;
-				//	Encountering the text element contained within the current tag
 				case XmlPullParser.TEXT:
-					/*
-					 * Determine if we're inside a Question tag when we find a Text tag,
-					 * then place the full text into questionText for later use
-					 */
+					//	Encountering the text element contained within the current tag
 					if (currentTag == QUESTION_TAG) {
+						/*
+						 * Determine if we're inside a Question tag when we find a Text tag,
+						 * then place the full text into questionText for later use
+						 */
 						questionText = parser.getText();
-					/*
-					 * If we're inside an Answer tag when we find a Text tag, then place
-					 * the full text into a cell of answers array
-					 */
 					} else if (currentTag == ANSWER_TAG) {
+						/*
+						 * If we're inside an Answer tag when we find a Text tag, then place
+						 * the full text into a cell of answers array
+						 */
 						if (currentAnswerNumber < answers.length)
 							answers[currentAnswerNumber] = parser.getText();
 					} break;
 				}
+				eventType = parser.next();
 			}
 		} catch (XmlPullParserException e) {
 			Log.e(QuestionTime.TAG, e.getMessage());

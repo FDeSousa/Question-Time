@@ -6,14 +6,18 @@ public class Game {
 
 	private QuestionsDataStruct questions;
 	private Question currentQuestion;
+	private int correctAnswers;
 
 	public Game() {
 		//	Default question set to use
-		questions = QuestionsDataStruct.instantiateQuestions(QuestionTime.RESOURCES.getXml(R.xml.questions_1));
+		new Game(QuestionsDataStruct.instantiateQuestions(QuestionTime.RESOURCES.getXml(R.xml.questions_1)));
 	}
 	
 	public Game(QuestionsDataStruct questions) {
+		//	Load up the Game class with the parsed-in QuestionsDataStruct instance
 		this.questions = questions;
+		correctAnswers = 0;
+		updateQuestion();
 	}
 	
 	public void updateQuestion() {
@@ -47,11 +51,13 @@ public class Game {
 		if (currentQuestion.checkAnswer(pressed, answerNumber)) {
 			//	Get the next question ready to answer, reset the button backgrounds
 			updateQuestion();
-			//	Reset the Answer button backgrounds, to be sure
-			QuestionTime.ANSWER_BUTTON_1.setBackgroundResource(R.drawable.answer_button_states);
-			QuestionTime.ANSWER_BUTTON_2.setBackgroundResource(R.drawable.answer_button_states);
-			QuestionTime.ANSWER_BUTTON_3.setBackgroundResource(R.drawable.answer_button_states);
-			QuestionTime.ANSWER_BUTTON_4.setBackgroundResource(R.drawable.answer_button_states);
+			//	Reset the Answer button backgrounds, to be sure Animations aren't messing with them
+			QuestionTime.ANSWER_BUTTON_1.setBackgroundResource(R.drawable.button);
+			QuestionTime.ANSWER_BUTTON_2.setBackgroundResource(R.drawable.button);
+			QuestionTime.ANSWER_BUTTON_3.setBackgroundResource(R.drawable.button);
+			QuestionTime.ANSWER_BUTTON_4.setBackgroundResource(R.drawable.button);
+			//	Increment the number of correct answers that were answered
+			correctAnswers++;
 		} else {
 			//	Show end game dialog and condition
 			endGame();

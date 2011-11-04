@@ -40,7 +40,7 @@ public class Question {
 	 */
 	public String getAnAnswer(int answerNumber) {
 		if (answerNumber < answers.length)
-			return answers[answerNumber - 1];
+			return answers[answerNumber];
 		else
 			return null;
 	}
