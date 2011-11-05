@@ -64,6 +64,11 @@ public class QuestionTime extends Activity {
 		ANSWER_BUTTON_2 = (Button) findViewById(R.id.question_answer2);
 		ANSWER_BUTTON_3 = (Button) findViewById(R.id.question_answer3);
 		ANSWER_BUTTON_4 = (Button) findViewById(R.id.question_answer4);
+		//	TODO: For some reason, these buttons aren't loading with correct resources, so reset here for now
+		ANSWER_BUTTON_1.setBackgroundResource(R.drawable.button);
+		ANSWER_BUTTON_2.setBackgroundResource(R.drawable.button);
+		ANSWER_BUTTON_3.setBackgroundResource(R.drawable.button);
+		ANSWER_BUTTON_4.setBackgroundResource(R.drawable.button);
 
 		//	Setup the dialogClickListener so we know what to do when back is pressed
 		dialogClickListener = new DialogInterface.OnClickListener() {
@@ -77,13 +82,27 @@ public class QuestionTime extends Activity {
 
 		//	Setup the AlertDialog.Builder to display the dialog later
 		builder = new AlertDialog.Builder(this)
-		.setMessage("Quit Question Time?")
-		.setPositiveButton(android.R.string.yes, dialogClickListener)
-		.setNegativeButton(android.R.string.no, dialogClickListener);
+			.setMessage("Quit Question Time?")
+			.setPositiveButton(android.R.string.yes, dialogClickListener)
+			.setNegativeButton(android.R.string.no, dialogClickListener);
 		//	Setup of Dialog finished
 
-		//	Instantiate the new Game instance to run
-		game = new Game();
+		final Object retrievedData = getLastNonConfigurationInstance();
+		//	Check if the application is loading for the first time
+		if (retrievedData == null) {
+			//	Instantiate the new Game instance to run
+			game = new Game();
+		} else {
+			//	TODO: Add a method to setup the UI elements after retrieving saved game session
+			//+	otherwise when changing device orientation the widgets' text is reset to defaults
+			game = (Game) retrievedData;
+		}
+	}
+
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		//	Only thing we would like to save is the game instance
+		return game;
 	}
 
 	@Override

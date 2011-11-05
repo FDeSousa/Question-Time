@@ -59,6 +59,10 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 		//	If we've reached the end, return null
 		return null;
 	}
+	
+	public Question getCurrent() {
+		return get(next);
+	}
 
 	@Override
 	public void remove() {
@@ -225,7 +229,9 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 						 * This is all only if we're currently residing inside a Question tag
 						 */
 						currentTag = ANSWER_TAG;
-						currentAnswerNumber = parser.getIdAttributeResourceValue(currentAnswerNumber + 1);
+						//	For safety, use currentAnswerNumber +2 (to account for the -1) as default,
+						//+	though shouldn't be needed, and take 1 away as the IDs count from 1 not 0
+						currentAnswerNumber = parser.getAttributeIntValue(null, "id", currentAnswerNumber + 1);
 					} else {
 						/*
 						 * Other, unidentified tags will be ignored for now, so set the DEFAULT_TAG
@@ -267,8 +273,8 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 						 * If we're inside an Answer tag when we find a Text tag, then place
 						 * the full text into a cell of answers array
 						 */
-						if (currentAnswerNumber < answers.length)
-							answers[currentAnswerNumber] = parser.getText();
+						if (currentAnswerNumber <= answers.length)
+							answers[currentAnswerNumber - 1] = parser.getText();
 					} break;
 				}
 				eventType = parser.next();

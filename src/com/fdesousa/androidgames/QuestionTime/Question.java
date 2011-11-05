@@ -75,7 +75,6 @@ public class Question {
 			correctAnswer.setBackgroundResource(R.drawable.answer_correct_animation);
 			AnimationDrawable correctAnswerAnimation = (AnimationDrawable) correctAnswer.getBackground();
 			correctAnswerAnimation.start();
-			
 		}
 		
 		return answerNumber == correctAnswer;
