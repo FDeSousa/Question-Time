@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.content.res.Resources;
 import android.os.Environment;
 
 /**
@@ -21,6 +22,8 @@ public class FileIO {
 	public final static String QUESTION_TIME_FILE_EXTENSION = ".Question-Time";
 	public final static String FOLDER_SEPARATOR = File.separator;
 	
+	Resources resources;
+	
 	String externalStoragePath;	//	Path of the folder we want to use in ext storage
 	File dir;	//	File instance of the folder we'll be reading from/writing to
 
@@ -28,8 +31,9 @@ public class FileIO {
 	 * Constructor requires a String containing folder name where the app will
 	 * read from/write to for user's own BASIC program files
 	 * @param foldername - the folder to use for user's own written programs
+	 * @param resources - the application's resources for later retrieval of stuff
 	 */
-	public FileIO(String foldername) {
+	public FileIO(String foldername, Resources resources) {
 		//	Ask the environment to construct the path to the external storage directory
 		this.externalStoragePath = Environment
 				.getExternalStorageDirectory()
@@ -40,6 +44,8 @@ public class FileIO {
 
 		//	Create a new File instance with the created external storage directory
 		this.dir = new File(externalStoragePath);
+		
+		this.resources = resources;
 	}
 
 	/**

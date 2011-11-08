@@ -9,7 +9,7 @@ public class Question {
 	private final String question;
 	private final String[] answers;
 	private final int correctAnswer;
-	
+
 	public Question(int questionNumber, String question, String[] answers, int correctAnswer) {
 		this.questionNumber = questionNumber;
 		this.question = question;
@@ -87,13 +87,13 @@ public class Question {
 	private Button getCorrectAnswerButton() {
 		switch (correctAnswer) {
 		case 1:
-			return QuestionTime.ANSWER_BUTTON_1;
+			return UiController.ANSWER_BUTTON_1;
 		case 2:
-			return QuestionTime.ANSWER_BUTTON_2;
+			return UiController.ANSWER_BUTTON_2;
 		case 3:
-			return QuestionTime.ANSWER_BUTTON_3;
+			return UiController.ANSWER_BUTTON_3;
 		case 4:
-			return QuestionTime.ANSWER_BUTTON_4;
+			return UiController.ANSWER_BUTTON_4;
 		default:
 			return null;
 		}

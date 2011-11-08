@@ -1,7 +1,5 @@
 package com.fdesousa.androidgames.QuestionTime;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.widget.Button;
 
 public class Game {
@@ -9,8 +7,7 @@ public class Game {
 	private QuestionsDataStruct questions;
 	private Question currentQuestion;
 	private int correctAnswers;
-	private DialogInterface.OnClickListener dialogClickListener;
-	private AlertDialog.Builder end;
+	
 
 	public Game() {
 		//	Default question set to use, call other constructor with it
@@ -22,31 +19,9 @@ public class Game {
 		this.questions = questions;
 		correctAnswers = 0;
 		updateQuestion();
-
-		//	Setup the dialogClickListener so we know what to do when back is pressed
-		dialogClickListener = new DialogInterface.OnClickListener() {
-			@Override public void onClick(DialogInterface dialog, int which) {
-				switch (which) {
-				case DialogInterface.BUTTON_POSITIVE:
-					QuestionTime.INSTANCE.game = new Game();
-					dialog.cancel();
-					break;
-				case DialogInterface.BUTTON_NEGATIVE:
-					QuestionTime.INSTANCE.finish();
-				}
-			}
-		};
-		//	Setup the AlertDialog.Builder to display the dialog later
-		end = new AlertDialog.Builder(QuestionTime.INSTANCE)
-			.setPositiveButton("Play Again", dialogClickListener)
-			.setNegativeButton("Quit", dialogClickListener);
-		//	Setup of Dialog finished
 		
 		//	Reset the Answer button backgrounds, to be sure Animations aren't messing with them
-		QuestionTime.ANSWER_BUTTON_1.setBackgroundResource(R.drawable.button);
-		QuestionTime.ANSWER_BUTTON_2.setBackgroundResource(R.drawable.button);
-		QuestionTime.ANSWER_BUTTON_3.setBackgroundResource(R.drawable.button);
-		QuestionTime.ANSWER_BUTTON_4.setBackgroundResource(R.drawable.button);
+		UiController.resetAnswerButtonBackgrounds();
 	}
 
 	public void updateQuestion() {
@@ -54,16 +29,15 @@ public class Game {
 		if (questions.hasNext()) {
 			//	Get next question, check if it isn't null
 			if ((currentQuestion = questions.next()) != null) {
-				//1	Set the on-screen controls' text
-				//2	Update the Question number
-				QuestionTime.CURRENT_QUESTION_NUMBER.setText("Question number " + currentQuestion.getQuestionNumber());
-				//3	Update the Question text display
-				QuestionTime.CURRENT_QUESTION_TEXT.setText(currentQuestion.getQuestionText());
-				//4	Update the answer buttons
-				QuestionTime.ANSWER_BUTTON_1.setText(currentQuestion.getAnAnswer(0));
-				QuestionTime.ANSWER_BUTTON_2.setText(currentQuestion.getAnAnswer(1));
-				QuestionTime.ANSWER_BUTTON_3.setText(currentQuestion.getAnAnswer(2));
-				QuestionTime.ANSWER_BUTTON_4.setText(currentQuestion.getAnAnswer(3));
+				//	Get all of the strings for convenience first
+				String number = "Question number " + currentQuestion.getQuestionNumber(), 
+						text = currentQuestion.getQuestionText(), 
+						a1 = currentQuestion.getAnAnswer(0), 
+						a2 = currentQuestion.getAnAnswer(1), 
+						a3 = currentQuestion.getAnAnswer(2), 
+						a4 = currentQuestion.getAnAnswer(3);
+				//	Setup the UI with the static method
+				UiController.setUiControlsText(number, text, a1, a2, a3, a4);
 			} else {	//	Otherwise, force end game condition
 				endGame();
 				return;
@@ -75,7 +49,7 @@ public class Game {
 	}
 
 	public void checkAnswer(Button pressed, int answerNumber) {
-		QuestionTime.disableButtons();
+		UiController.setButtonsEnabled(false);
 
 		//	Feels stupid having to include this line here, but it's a safer option for testing
 		if (currentQuestion == null)
@@ -85,10 +59,7 @@ public class Game {
 			//	Get the next question ready to answer, reset the button backgrounds
 			updateQuestion();
 			//	Reset the Answer button backgrounds, to be sure Animations aren't messing with them
-			QuestionTime.ANSWER_BUTTON_1.setBackgroundResource(R.drawable.button);
-			QuestionTime.ANSWER_BUTTON_2.setBackgroundResource(R.drawable.button);
-			QuestionTime.ANSWER_BUTTON_3.setBackgroundResource(R.drawable.button);
-			QuestionTime.ANSWER_BUTTON_4.setBackgroundResource(R.drawable.button);
+			UiController.resetAnswerButtonBackgrounds();
 			//	Increment the number of correct answers that were answered
 			correctAnswers++;
 		} else {
@@ -96,12 +67,12 @@ public class Game {
 			endGame();
 		}
 
-		QuestionTime.enableButtons();
+		UiController.setButtonsEnabled(true);
 	}
 
 	public void endGame() {
-		//	TODO: Display the end game condition
-		end.setMessage("You scored " + correctAnswers + " correct answers!");
-		end.show();
+		//	Display the end game condition
+		QuestionTime.UI_CONTROLLER.displayEndGameConfirmationDialog(
+					"You scored " + correctAnswers + " correct answers!");
 	}
 }
