@@ -5,29 +5,30 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AnimationSet;
 
+/**
+ * <h1>QuestionTime</h1>
+ * <h3>Question Time's main activity</h3>
+ * Main Activity for Question Time, a simple multiple-choice question-answer
+ * game running on Android. Handles resources and static instances.
+ * @author Filipe De Sousa
+ * @version 0.5
+ */
 public class QuestionTime extends Activity {
 	/**	String used for logging purposes	*/
 	public static final String TAG = "QuestionTime";
 
 	/**	An instance of QuestionTime for later use of screen widgets	*/
 	static QuestionTime INSTANCE;
-	/**	Static instance of Resources for loading files	*/
+	/**	Static instance of Resources for loading files				*/
 	static Resources RESOURCES;
-	/**	Static instance of FileIO for loading files	*/
+	/**	Static instance of FileIO for loading files					*/
 	static FileIO FILE_IO;
+	/**	Static instance of UiController for handling UI widgets		*/
 	static UiController UI_CONTROLLER;
-
-	static AnimationSet CHECKING;
-	static AnimationSet CORRECT;
-	static AnimationSet INCORRECT;
 
 	Game game;
 
-	/** 
-	 * Called when the activity is first created.
-	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,11 +38,9 @@ public class QuestionTime extends Activity {
 		setContentView(R.layout.question_layout);
 
 		INSTANCE = this;
-		FILE_IO = new FileIO(TAG, getResources());
+		FILE_IO = new FileIO(TAG);
+		RESOURCES = getResources();
 		UI_CONTROLLER = new UiController();
-		
-		//	The Button backgrounds need reseting right away for some odd reason
-		UiController.resetAnswerButtonBackgrounds();
 
 		final Object retrievedData = getLastNonConfigurationInstance();
 		//	Check if the application is loading for the first time
@@ -52,7 +51,7 @@ public class QuestionTime extends Activity {
 			//	Add a method to setup the UI elements after retrieving saved game session
 			//+	otherwise when changing device orientation the widgets' text is reset to defaults
 			game = (Game) retrievedData;
-			UiController.resetAnswerButtonBackgrounds();
+			game.setupUiControls();
 		}
 	}
 
@@ -68,6 +67,10 @@ public class QuestionTime extends Activity {
 		UI_CONTROLLER.displayExitConfirmationDialog();
 	}
 
+	/**
+	 * OnClick method for all four Answer buttons in the main layout
+	 * @param v - instance of View, used to determine the pressed Button
+	 */
 	public void answerButton(View v) {
 		/*
 		 *	To simplify, we are using a switch .. case instead of an

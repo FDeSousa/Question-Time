@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.content.res.Resources;
 import android.os.Environment;
 
 /**
- * Simplistic handler class for controlling the file-accessing mechanism.
+ * <h1>FileIO</h1>
+ * <h3>Handler class for file-access in Question Time</h3>
+ * <p>Simplistic handler class for controlling the file-accessing mechanism.</p>
  * @author Filipe De Sousa
- * @version 0.1
+ * @version 1.0
  */
 public class FileIO {
 	/**
@@ -21,8 +22,6 @@ public class FileIO {
 	 */
 	public final static String QUESTION_TIME_FILE_EXTENSION = ".Question-Time";
 	public final static String FOLDER_SEPARATOR = File.separator;
-	
-	Resources resources;
 	
 	String externalStoragePath;	//	Path of the folder we want to use in ext storage
 	File dir;	//	File instance of the folder we'll be reading from/writing to
@@ -33,8 +32,8 @@ public class FileIO {
 	 * @param foldername - the folder to use for user's own written programs
 	 * @param resources - the application's resources for later retrieval of stuff
 	 */
-	public FileIO(String foldername, Resources resources) {
-		//	Ask the environment to construct the path to the external storage directory
+	public FileIO(String foldername) {
+		//	Get the path to external storage directory, then edit to include out folder
 		this.externalStoragePath = Environment
 				.getExternalStorageDirectory()
 				.getAbsolutePath()
@@ -44,8 +43,6 @@ public class FileIO {
 
 		//	Create a new File instance with the created external storage directory
 		this.dir = new File(externalStoragePath);
-		
-		this.resources = resources;
 	}
 
 	/**

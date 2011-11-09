@@ -3,6 +3,14 @@ package com.fdesousa.androidgames.QuestionTime;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.Button;
 
+/**
+ * <h1>Question</h1>
+ * <h3>Class for a single Question for Question Time</h3>
+ * <p>Question class for Question Time, created to handle an individual
+ * Question and its four answers, generally for convenience</p>
+ * @author Filipe De Sousa
+ * @version 0.5
+ */
 public class Question {
 
 	private final int questionNumber;
@@ -57,8 +65,9 @@ public class Question {
 		pressed.setBackgroundResource(R.drawable.answer_checking_animation);
 		AnimationDrawable pressedAnswerAnimation = (AnimationDrawable) pressed.getBackground();
 		pressedAnswerAnimation.start();
+		boolean correct = answerNumber == correctAnswer;
 		
-		if (answerNumber == correctAnswer) {
+		if (correct) {
 			//	Correct answer selected, so show the correct answer animation
 			pressed.setBackgroundResource(R.drawable.answer_correct_animation);
 			pressedAnswerAnimation = (AnimationDrawable) pressed.getBackground();
@@ -77,7 +86,7 @@ public class Question {
 			correctAnswerAnimation.start();
 		}
 		
-		return answerNumber == correctAnswer;
+		return correct;
 	}
 	
 	/**

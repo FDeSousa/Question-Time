@@ -10,6 +10,16 @@ import android.content.res.XmlResourceParser;
 import android.util.Log;
 import android.util.SparseArray;
 
+/**
+ * <h1>QuestionsDataStruct</h1>
+ * <h3>Data Structure and Question Handler for Question Time</h3>
+ * <p>Used to control the Question instances in a set and in each individual Game instance/session.<br />
+ * Extends SparseArray to provide the organised storage of
+ * Questions with key:value pairs, and implements Iterator to allow easy
+ * iteration over Questions in the SparseArray.</p>
+ * @author Filipe De Sousa
+ * @version 0.5
+ */
 public class QuestionsDataStruct extends SparseArray<Question> implements Iterator<Question> {
 	/**	Always initialises with a minimum default capacity, as defined here	*/
 	private static final int DEFAULT_INITIAL_CAPACITY = 10;
@@ -60,41 +70,41 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 		return null;
 	}
 	
-	public Question getCurrent() {
-		return get(next);
-	}
-
 	@Override
 	public void remove() {
 		remove(next);
 	}
 
 	/**
-	 * @return the name
+	 * Convenience method to return the Question instance currently pointed to
+	 * @return the current Question instance
 	 */
-	public String getName() {
-		return name;
+	public Question getCurrent() {
+		return get(next);
 	}
 
 	/**
-	 * @return the difficulty
+	 * Convenience method for getting the currently loaded Question Set's basic information.<br />
+	 * The order of the information in the array is as defined by the static values in:<ul>
+	 * <li>QUESTION_NAME</li>
+	 * <li>QUESTION_DIFFICULTY</li>
+	 * <li>QUESTION_SUBJECT</li>
+	 * <li>QUESTION_DESCRIPTION</li>
+	 * <li>QUESTION_NUMBERS</li>
+	 * </ul>
+	 * @return a String array containing the read information, in order
 	 */
-	public String getDifficulty() {
-		return difficulty;
-	}
-
-	/**
-	 * @return the subject
-	 */
-	public String getSubject() {
-		return subject;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
+	public String[] getCurrentQuestionSetInformation() {
+		//	Instantiate new String[] with default values, just in case
+		String[] information = { "name", "difficulty", "subject", "description", "number" };
+		//	Set the new values into the array, in their defined order
+		information[QUESTION_NAME] = name;
+		information[QUESTION_DIFFICULTY] = difficulty;
+		information[QUESTION_SUBJECT] = subject;
+		information[QUESTION_DESCRIPTION] = description;
+		information[QUESTION_NUMBERS] = Integer.toString(size());
+		
+		return information;
 	}
 
 	/**	Position Question Name is in array returned by getQuestionsInformation(parser)			*/
@@ -109,11 +119,18 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 	public static final int QUESTION_NUMBERS = 4;
 	
 	/**
-	 * Convenience method for getting just the basic information on a Question Set
-	 * @param parser
-	 * @return
+	 * Convenience method for reading in just the basic information on a Question Set from XML.<br />
+	 * The order of the information in the array is as defined by the static values in:<ul>
+	 * <li>QUESTION_NAME</li>
+	 * <li>QUESTION_DIFFICULTY</li>
+	 * <li>QUESTION_SUBJECT</li>
+	 * <li>QUESTION_DESCRIPTION</li>
+	 * <li>QUESTION_NUMBERS</li>
+	 * </ul>
+	 * @param parser - an instance of XmlResourceParser that already has the XML file loaded
+	 * @return a String array containing the read information, in order
 	 */
-	public static final String[] getQuestionsInformation(XmlResourceParser parser) {
+	public static final String[] readQuestionSetInformationOnly(XmlResourceParser parser) {
 		String[] information = { "name", "difficulty", "subject", "description", "number" };
 		boolean run = true;
 		int numberOfQuestions = -1;
@@ -146,7 +163,7 @@ public class QuestionsDataStruct extends SparseArray<Question> implements Iterat
 		return information;
 	}
 
-	//	Used for identifying the current tag we're reading in an XML file
+	//	Below values are used exclusively for identifying the current tag we're reading in an XML file
 	/**	Used to denote we're reading an undefined tag 	*/
 	private static final int DEFAULT_TAG = 0;
 	/**	Used to denote we're reading a Question Set tag	*/
